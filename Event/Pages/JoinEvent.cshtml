@@ -7,48 +7,22 @@
 
 <h1>JoinEvent</h1>
 
-<div>
-    <h4>Events</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Event.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Event.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Event.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Event.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Event.Place)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Event.Place)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Event.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Event.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Event.Date)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Event.Date)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Event.SpotsAvailable)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Event.SpotsAvailable)
-        </dd>
-    </dl>
+<div class="jumbotron">
+    <h1 class="display-4"> @Model.Event.Title</h1>
+    <p class="lead">@Model.Event.Description</p>
+    <hr class="my-4">
+    <p class="font-weight-bold">Location:  @Model.Event.Place</p>
+    <hr class="my-4">
+    <p class="font-weight-bold">Address:  @Model.Event.Address)</p>
+    <hr class="my-4">
+    <p class="font-weight-bold">Date: @Model.Event.Date</p>
+    <hr class="my-4">
+    <p class="font-weight-bold">Date the event was created: @Model.Event.SpotsAvailable </p>
 </div>
+
+<hr />
+
+
 <div>
     @{
         if (!Model.Event.Attendees.Contains(Model.attendee))

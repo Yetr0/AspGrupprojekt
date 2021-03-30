@@ -6,57 +6,17 @@
 }
 
 <h1>Events</h1>
+@foreach (var item in Model.Events)
+{
 
+    <div class="jumbotron ">
+        <h1 class="display-4 text-center">@Html.DisplayFor(modelItem => item.Title)</h1>
+        <p class="lead text-center">@Html.DisplayFor(modelItem => item.Description)</p>
+        <hr class="my-4">
+        <p class="font-weight-bold text-center">Date the event was created:  @Html.DisplayFor(modelItem => item.Date) </p>
+        <p class="lead">
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Events[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Events[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Events[0].Place)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Events[0].Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Events[0].Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Events[0].SpotsAvailable)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Events) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Place)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpotsAvailable)
-            </td>
-            <td>
-                <a asp-page="./JoinEvent" asp-route-id="@item.Id">See more and join event</a> |
-            </td>
-        </tr>
+            <a asp-page="./JoinEvent" class=" btn btn-primary text-center" asp-route-id="@item.Id">See more and join event</a> 
+        </p>
+    </div>
 }
-    </tbody>
-</table>
