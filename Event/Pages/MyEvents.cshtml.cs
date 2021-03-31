@@ -19,11 +19,11 @@ namespace Event.Pages
             _context = context;
         }
 
-        public IList<Events> Events { get;set; }
+        public IList<Events> Events { get; set; }
 
-        public void OnGet()
-        {
-            Events = _context.Attendees.Include(a => a.Events).First(a => a.Id == 1).Events;
-        }
+        //    public void OnGet()
+        //    {
+        //        Events = _context.Attendees.Include(a => a.Events).First(a => a.Id == 1).Events;
+        //    }
     }
 }

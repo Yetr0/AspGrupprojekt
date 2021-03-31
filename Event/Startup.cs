@@ -31,7 +31,7 @@ namespace Event
             services.AddDbContext<DatabaseContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<MyUser>()
          .AddEntityFrameworkStores<DatabaseContext>();
         }
 

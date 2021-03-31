@@ -21,48 +21,49 @@ namespace Event.Pages
 
         public Events Event { get; set; }
 
-        public Attendee attendee { get; set; }
+        public MyUser MyUser { get; set; }
 
-        public IActionResult OnGet(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+    //    public IActionResult OnGet(int? id)
+    //    {
+    //        if (id == null)
+    //        {
+    //            return NotFound();
+    //        }
 
-            attendee = _context.Attendees.First(a => a.Id == 1);
-            Event = _context.Events.Include(e => e.Attendees).Include(e => e.Organizer).First(e => e.Id == id);
+    //        attendee = _context.Attendees.First(a => a.Id == 1);
+    //        Event = _context.Events.Include(e => e.Attendees).Include(e => e.Organizer).First(e => e.Id == id);
 
 
-            if (Event == null)
-            {
-                return NotFound();
-            }
-            return Page();
-        }
-        public IActionResult OnPost(int id)
-        {
-            attendee =_context.Attendees.First(a => a.Id == 1);
-            Events events = _context.Events.Include(e => e.Attendees).First(e => e.Id == id) ;
+    //        if (Event == null)
+    //        {
+    //            return NotFound();
+    //        }
+    //        return Page();
+    //    }
+    //    public IActionResult OnPost(int id)
+    //    {
+    //        attendee = _context.Attendees.First(a => a.Id == 1);
+    //        Events events = _context.Events.Include(e => e.Attendees).First(e => e.Id == id);
 
-            if(_context.JoinEvent(attendee, events, _context))
-            {
-                Event = _context.Events.Include(e => e.Attendees).Include(e => e.Organizer).First(e => e.Id == id);
-                return Page();
-            }
+    //        if (_context.JoinEvent(attendee, events, _context))
+    //        {
+    //            Event = _context.Events.Include(e => e.Attendees).Include(e => e.Organizer).First(e => e.Id == id);
+    //            return Page();
+    //        }
 
-            Event = _context.Events.Include(e => e.Attendees).Include(e => e.Organizer).First(e => e.Id == id);
-            return Page();
+    //        Event = _context.Events.Include(e => e.Attendees).Include(e => e.Organizer).First(e => e.Id == id);
+    //        return Page();
 
-        }
+    //    }
 
-        public bool AttendeeJoined(Events Event, Attendee attendee)
-        {
-            if (Event.Attendees.Contains(attendee))
-            {
-                return true;
-            }
-            return false;
-        }
-    }
+    //    public bool AttendeeJoined(Events Event, Attendee attendee)
+    //    {
+    //        if (Event.Attendees.Contains(attendee))
+    //        {
+    //            return true;
+    //        }
+    //        return false;
+    //    }
+   }
 }
+    

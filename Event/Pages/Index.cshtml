@@ -4,8 +4,21 @@
     ViewData["Title"] = "Home page";
 }
 
+
+
 <div class="text-center">
+    <h1 class="display-4">Welcome</h1>
     <img class="card-img mb-4" src="~/images/discgolfbasket.jpg" />
     <h3>Join us today and compete in tournaments or play for fun with your local disc golf club</h3>
-    <a asp-page="./Events" class="btn btn-info">Sign up</a>
+    <div class="btn-group">
+        <a asp-page="/User/Register" type="button" class="btn btn-outline-primary">Register</a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-page="/User/Logout" type="button" class="btn btn-outline-primary">Log Out</a>
+        }
+        else
+        {
+            <a asp-page="/User/Login" type="button" class="btn btn-outline-primary">Log In</a>
+        }
+    </div>
 </div>

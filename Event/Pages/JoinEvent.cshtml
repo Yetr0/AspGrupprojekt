@@ -24,8 +24,8 @@
 
 
 <div>
-    @{
-        if (!Model.Event.Attendees.Contains(Model.attendee))
+    @*@{
+        if (!Model.Event.MyUser.Contains(Model.attendee))
         {
             <form method="post">
                 <input type="submit" value="Join Event" />
@@ -35,7 +35,7 @@
         {
             <p>You've already joined this event</p>
         }
-    }
+    }*@
     <a asp-page="./Events">Back</a>
 </div>
 @{
