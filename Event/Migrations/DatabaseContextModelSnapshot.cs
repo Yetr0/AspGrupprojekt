@@ -35,6 +35,9 @@ namespace Event.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MyUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Place")
                         .HasColumnType("nvarchar(max)");
 
@@ -45,6 +48,8 @@ namespace Event.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MyUserId");
 
                     b.ToTable("Event");
                 });
@@ -249,6 +254,13 @@ namespace Event.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Event.Models.Events", b =>
+                {
+                    b.HasOne("Event.Models.MyUser", null)
+                        .WithMany("MyEvents")
+                        .HasForeignKey("MyUserId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -298,6 +310,11 @@ namespace Event.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Event.Models.MyUser", b =>
+                {
+                    b.Navigation("MyEvents");
                 });
 #pragma warning restore 612, 618
         }

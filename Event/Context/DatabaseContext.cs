@@ -9,19 +9,17 @@ using System.Threading.Tasks;
 
 namespace Event.Context
 {
+
     public class DatabaseContext : IdentityDbContext<MyUser>
     {
 
-
-      // public DbSet<Organizer> Organizers { get; set; }
         public DbSet<Events> Event { get; set; }
+        public DbSet<MyUser> MyUser { get; set; }
+
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
-
-
-
         public void Seed()
         {
 
@@ -86,11 +84,11 @@ namespace Event.Context
 
                 }
             };
-          //  Organizers.AddRange(OrganizersList);
+            //  Organizers.AddRange(OrganizersList);
             Event.AddRange(EventsList);
 
             SaveChanges();
 
         }
     }
-}
+    }

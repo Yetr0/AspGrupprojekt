@@ -7,63 +7,69 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Event.Context;
 using Event.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Event.Pages
 {
     public class JoinEventModel : PageModel
     {
-        private readonly Event.Context.DatabaseContext _context;
 
-        public JoinEventModel(Event.Context.DatabaseContext context)
+        private readonly DatabaseContext _context;
+        private readonly UserManager<MyUser> _userManager;
+
+        public JoinEventModel(
+            DatabaseContext context,
+            UserManager<MyUser> userManager
+            )
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public Events Event { get; set; }
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        public MyUser MyUser { get; set; }
+            Event = await _context.Event.FirstOrDefaultAsync(m => m.Id == id);
 
-    //    public IActionResult OnGet(int? id)
-    //    {
-    //        if (id == null)
-    //        {
-    //            return NotFound();
-    //        }
+            if (Event == null)
+            {
+                return NotFound();
+            }
+            return Page();
+        }
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-    //        attendee = _context.Attendees.First(a => a.Id == 1);
-    //        Event = _context.Events.Include(e => e.Attendees).Include(e => e.Organizer).First(e => e.Id == id);
+            Event = await _context.Event.FirstOrDefaultAsync(m => m.Id == id);
 
+            if (Event == null)
+            {
+                return NotFound();
+            }
 
-    //        if (Event == null)
-    //        {
-    //            return NotFound();
-    //        }
-    //        return Page();
-    //    }
-    //    public IActionResult OnPost(int id)
-    //    {
-    //        attendee = _context.Attendees.First(a => a.Id == 1);
-    //        Events events = _context.Events.Include(e => e.Attendees).First(e => e.Id == id);
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Users
+                .Where(u => u.Id == userId)
+                .Include(u => u.MyEvents)
+                .FirstOrDefaultAsync();
 
-    //        if (_context.JoinEvent(attendee, events, _context))
-    //        {
-    //            Event = _context.Events.Include(e => e.Attendees).Include(e => e.Organizer).First(e => e.Id == id);
-    //            return Page();
-    //        }
+            if (!user.MyEvents.Contains(Event))
+            {
+                user.MyEvents.Add(Event);
+                await _context.SaveChangesAsync();
+            }
 
-    //        Event = _context.Events.Include(e => e.Attendees).Include(e => e.Organizer).First(e => e.Id == id);
-    //        return Page();
-
-    //    }
-
-    //    public bool AttendeeJoined(Events Event, Attendee attendee)
-    //    {
-    //        if (Event.Attendees.Contains(attendee))
-    //        {
-    //            return true;
-    //        }
-    //        return false;
-    //    }
-   }
+            return Page();
+        }
+    }
 }
     

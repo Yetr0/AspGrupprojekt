@@ -28,8 +28,11 @@ namespace Event
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
             services.AddDbContext<DatabaseContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+                options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseContext")));
+     
+
 
             services.AddDefaultIdentity<MyUser>()
          .AddEntityFrameworkStores<DatabaseContext>();

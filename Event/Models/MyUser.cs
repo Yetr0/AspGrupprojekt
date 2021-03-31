@@ -9,6 +9,6 @@ namespace Event.Models
   
     public class MyUser : IdentityUser
     {
-        ICollection<Events> Event { get; set; }
+        public IList<Events> MyEvents { get; set; }
     }
 }

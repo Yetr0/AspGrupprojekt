@@ -7,23 +7,42 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Event.Context;
 using Event.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Event.Pages
 {
+    [Authorize]
     public class MyEventsModel : PageModel
     {
-        private readonly Event.Context.DatabaseContext _context;
+        private readonly DatabaseContext _context;
+        private readonly UserManager<MyUser> _userManager;
 
-        public MyEventsModel(Event.Context.DatabaseContext context)
+        public MyEventsModel(
+            DatabaseContext context,
+            UserManager<MyUser> userManager
+            )
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IList<Events> Events { get; set; }
 
-        //    public void OnGet()
-        //    {
-        //        Events = _context.Attendees.Include(a => a.Events).First(a => a.Id == 1).Events;
-        //    }
+        public async Task OnGetAsync()
+        {
+
+            var userId = _userManager.GetUserId(User);
+
+            var user = await _context.Users
+               .Where(u => u.Id == userId)
+               .Include(u => u.MyEvents)
+               .FirstOrDefaultAsync();
+
+
+            Events = user.MyEvents;
+        }
     }
+
 }
+    

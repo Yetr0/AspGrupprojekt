@@ -19,7 +19,7 @@ namespace Event.Pages
             _context = context;
         }
 
-        public IList<Events> Events { get;set; }
+        public IList<Events> Events { get; set; }
 
         public async Task OnGetAsync()
         {

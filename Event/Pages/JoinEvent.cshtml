@@ -7,42 +7,40 @@
 
 <h1>JoinEvent</h1>
 
-<div class="jumbotron">
-    <h1 class="display-4"> @Model.Event.Title</h1>
-    <p class="lead">@Model.Event.Description</p>
+<div class="jumbotron ">
+    <h1 class="display-4 text-center"> @Model.Event.Title</h1>
+    <p class="lead text-center">@Model.Event.Description</p>
+    <hr class="my-4 text-center">
+    <p class="font-weight-bold text-center">Location:  @Model.Event.Place</p>
+    <hr class="my-4 text-center">
+    <p class="font-weight-bold text-center">Address:  @Model.Event.Address)</p>
     <hr class="my-4">
-    <p class="font-weight-bold">Location:  @Model.Event.Place</p>
+    <p class="font-weight-bold text-center">Date: @Model.Event.Date</p>
     <hr class="my-4">
-    <p class="font-weight-bold">Address:  @Model.Event.Address)</p>
-    <hr class="my-4">
-    <p class="font-weight-bold">Date: @Model.Event.Date</p>
-    <hr class="my-4">
-    <p class="font-weight-bold">Date the event was created: @Model.Event.SpotsAvailable </p>
+    <p class="font-weight-bold text-center">Date the event was created: @Model.Event.SpotsAvailable </p>
 </div>
 
 <hr />
 
-
-<div>
-    @*@{
-        if (!Model.Event.MyUser.Contains(Model.attendee))
-        {
-            <form method="post">
-                <input type="submit" value="Join Event" />
-            </form>
-        }
-        else
-        {
-            <p>You've already joined this event</p>
-        }
-    }*@
-    <a asp-page="./Events">Back</a>
-</div>
-@{
-    if (Request.Method == "POST")
-    {
-        <div class="text-center bg-success">
-            <h3>You just joined an event. See all your upcoming events <a asp-page="./MyEvents">here</a> or <a asp-page="./Events">find other events</a></h3>
+@if (Request.Method == "POST")
+{
+    <div class="d-flex flex-column py-2">
+        <h2 class="text-center">You just joined   @Model.Event.Title!!</h2>
+        <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center">
+                <a asp-page="/Events" type="button" class="btn btn-outline-primary">View More Events</a>
+                <a asp-page="/MyEvents" type="button" class="btn btn-outline-primary">View Your Events</a>
+            </div>
+            </div>
         </div>
-    }
 }
+else
+{
+<form asp-route-id="@Model.Event.Id">
+    <div class="d-flex justify-content-center">
+        <input type="submit" class="btn btn-outline-primary" value="Join This Event" />
+    </div>
+</form>
+}
+
+
