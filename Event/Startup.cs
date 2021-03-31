@@ -35,6 +35,7 @@ namespace Event
          .AddEntityFrameworkStores<DatabaseContext>();
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -54,6 +55,7 @@ namespace Event
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
