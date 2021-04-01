@@ -30,6 +30,7 @@ namespace Event
                 var services = scope.ServiceProvider;
                 try
                 {
+
                     var context = services.GetRequiredService<DatabaseContext>();
                     context.Database.EnsureCreated();
                     context.Seed();

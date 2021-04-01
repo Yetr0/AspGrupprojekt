@@ -15,7 +15,7 @@ namespace Event.Context
 
         public DbSet<Events> Event { get; set; }
         public DbSet<MyUser> MyUser { get; set; }
-
+        public object Events { get; internal set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
@@ -47,6 +47,9 @@ namespace Event.Context
             //        PhoneNumber = "0722193528"
             //    }
             //};
+
+        
+
             List<Events> EventsList = new List<Events>()
             {
                 new Events
@@ -86,6 +89,7 @@ namespace Event.Context
             };
             //  Organizers.AddRange(OrganizersList);
             Event.AddRange(EventsList);
+            MyUser.AddRange(Users);
 
             SaveChanges();
 

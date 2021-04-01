@@ -27,7 +27,14 @@ namespace Event.Pages
             _userManager = userManager;
         }
 
+        [TempData]
+        public String Message { get; set; }
+        public bool ShowMessage => !String.IsNullOrEmpty(Message);
+
+
         public IList<Events> Events { get; set; }
+        [BindProperty]
+        public MyUser MyUser { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -42,7 +49,32 @@ namespace Event.Pages
 
             Events = user.MyEvents;
         }
-    }
 
+        public async Task<IActionResult> OnPostDeleteAsync(int? id)
+        {
+          
+                var userId = _userManager.GetUserId(User);
+
+                var user = await _context.Users
+                   .Where(u => u.Id == userId)
+                   .Include(u => u.MyEvents)
+                   .FirstOrDefaultAsync();
+
+                Events RemoveEvent = await _context.Event.Where(e => e.Id == id).FirstOrDefaultAsync();
+
+                user.MyEvents.Remove(RemoveEvent);
+
+                await _context.SaveChangesAsync();
+
+            Message = "You have now left the event!";
+
+            return RedirectToPage();
+    
+
+
+
+        }
+
+    }
 }
     
