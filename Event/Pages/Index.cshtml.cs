@@ -30,10 +30,12 @@ namespace Event.Pages
             _userManager = userManager;
              _signInManager = signInManager;
         }
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(bool? seedDb)
         {
-           
+            if (seedDb ?? false)
+            {
                 await _context.ResetAndSeedAsync(_userManager);
+            }
            
         }
     }

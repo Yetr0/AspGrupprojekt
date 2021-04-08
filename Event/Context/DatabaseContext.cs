@@ -11,10 +11,15 @@ namespace Event.Context
 {
     public class DatabaseContext : IdentityDbContext<MyUser>
     {
+
+
  
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
+
         }
+
+        public DbSet<MyUser> MyUsers { get; set; }
 
         public DbSet<Events> Events { get; set; }
 
@@ -23,6 +28,7 @@ namespace Event.Context
             base.OnModelCreating(builder);
         }
 
+  
 
         public async Task ResetAndSeedAsync(UserManager<MyUser> userManager)
         {
@@ -75,6 +81,7 @@ namespace Event.Context
                 }
             }
 
+
             //Add user to each role
 
             await userManager.AddToRoleAsync(adminUser, "Admin");
@@ -118,5 +125,6 @@ namespace Event.Context
 
             await SaveChangesAsync();
         }
+
     }
 }

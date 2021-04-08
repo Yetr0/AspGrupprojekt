@@ -5,43 +5,46 @@
     ViewData["Title"] = "AddEvents";
 }
 
-<h1>AddEvents</h1>
 
-<h4>Events</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row h-100 justify-content-center align-items-center">
+    <div class="col-10 col-md-8 col-lg-6">
+        <h1>Create New Event</h1>
+        <hr />
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Events.Title" class="control-label"></label>
-                <input asp-for="Events.Title" class="form-control" />
-                <span asp-validation-for="Events.Title" class="text-danger"></span>
+                <label asp-for="@Model.EventCreated.Title" class="col-sm-10 col-form-label col-form-label-lg" style="font-weight: bold;"></label>
+                <input asp-for="@Model.EventCreated.Title" class="form-control form-control-lg">
+                <span asp-validation-for="@Model.EventCreated.Title" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Events.Description" class="control-label"></label>
-                <input asp-for="Events.Description" class="form-control" />
-                <span asp-validation-for="Events.Description" class="text-danger"></span>
+                <label asp-for="@Model.EventCreated.Description" class="col-sm-10 col-form-label col-form-label-lg" style="font-weight: bold;">Description</label>
+                <textarea asp-for="@Model.EventCreated.Description" class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                <span asp-validation-for="@Model.EventCreated.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Events.Place" class="control-label"></label>
-                <input asp-for="Events.Place" class="form-control" />
-                <span asp-validation-for="Events.Place" class="text-danger"></span>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="@Model.EventCreated.Date" class="col-sm-10 col-form-label col-form-label-lg" style="font-weight: bold;"></label>
+                    <input asp-for="@Model.EventCreated.Date" class="form-control">
+                    <span asp-validation-for="@Model.EventCreated.Date" id="basic-addon2"></span>
+                </div>
+                <div class="form-group col-md-8">
+                    <label asp-for="@Model.EventCreated.Place" class="col-sm-10 col-form-label col-form-label-lg" style="font-weight: bold;"></label>
+                    <input asp-for="@Model.EventCreated.Place" class="form-control">
+                    <span asp-validation-for="@Model.EventCreated.Place" id="basic-addon2"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Events.Address" class="control-label"></label>
-                <input asp-for="Events.Address" class="form-control" />
-                <span asp-validation-for="Events.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Events.Date" class="control-label"></label>
-                <input asp-for="Events.Date" class="form-control" />
-                <span asp-validation-for="Events.Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Events.SpotsAvailable" class="control-label"></label>
-                <input asp-for="Events.SpotsAvailable" class="form-control" />
-                <span asp-validation-for="Events.SpotsAvailable" class="text-danger"></span>
+            <div class="form-row">
+                <div class="form-group col-md-8">
+                    <label asp-for="@Model.EventCreated.Address" class="col-sm-10 col-form-label col-form-label-lg" style="font-weight: bold;"></label>
+                    <input asp-for="@Model.EventCreated.Address" class="form-control">
+                    <span asp-validation-for="@Model.EventCreated.Address" id="basic-addon2"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="@Model.EventCreated.SpotsAvailable" class="col-sm-10 col-form-label col-form-label-lg" style="font-weight: bold;"></label>
+                    <input asp-for="@Model.EventCreated.SpotsAvailable" class="form-control">
+                    <span asp-validation-for="@Model.EventCreated.SpotsAvailable" id="basic-addon2"></span>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -49,7 +52,6 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-page="Index">Back to List</a>
 </div>
