@@ -1,98 +1,120 @@
-﻿using Event.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Event.Models;
 
 namespace Event.Context
 {
-
     public class DatabaseContext : IdentityDbContext<MyUser>
     {
-
-        public DbSet<Events> Event { get; set; }
-        public DbSet<MyUser> MyUser { get; set; }
-        public object Events { get; internal set; }
-
+ 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
-        public void Seed()
+
+        public DbSet<Events> Events { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+        }
 
-            Database.EnsureCreated();
 
+        public async Task ResetAndSeedAsync(UserManager<MyUser> userManager)
+        {
+            await Database.EnsureDeletedAsync();
+            await Database.EnsureCreatedAsync();
 
-            //List<Organizer> OrganizersList = new List<Organizer>()
-            //{
-            //    new Organizer
-            //    {
-            //        Name = "Johan Eriksson",
-            //        Email = "johan.frisbee@gmail.com",
-            //        PhoneNumber = "0722923781"
-            //    },
-            //    new Organizer
-            //    {
-            //        Name = "Erik Malmberg",
-            //        Email = "malmbergsfrisbee@gmail.com",
-            //        PhoneNumber = "0722851374"
-            //    },
-            //    new Organizer
-            //    {
-            //        Name = "Nils Karlsson",
-            //        Email = "karlsson@gmail.com",
-            //        PhoneNumber = "0722193528"
-            //    }
-            //};
+            //Creates users for each role
 
-        
-
-            List<Events> EventsList = new List<Events>()
+            MyUser adminUser = new MyUser()
             {
-                new Events
-                {
-                    Title = "Ale open",
-                //    Organizer = OrganizersList[0],
-                    Description = "Come play on one of Swedens greatest discgolf courses",
-                    Place = "Stengunsund",
-                    Address = "Hasselbacken, 13",
-                    Date = DateTime.Parse("4/22/2021 18:00"),
-                    SpotsAvailable = 30,
+                UserName = "admin_user",
+                EmailConfirmed = true,
+                Email = "test@hotmail.com",
+            };
+            await userManager.CreateAsync(adminUser, "Passw0rd!");
+
+            MyUser OrganizerUser = new MyUser()
+            {
+                UserName = "OrganizerUser",
+                EmailConfirmed = true,
+                Email = "test@hotmail.com",
+            };
+            await userManager.CreateAsync(OrganizerUser, "Passw0rd!");
+
+            MyUser User = new MyUser()
+            {
+                UserName = "User",
+                EmailConfirmed = true,
+                Email = "test@hotmail.com",
+            };
+            await userManager.CreateAsync(User, "Passw0rd!");
 
 
-                },
-                new Events
+            //Creates the roles 
+
+            string[] roles = { "Admin", "Organizer", "User" };
+            
+
+            foreach (string role in roles)
+            {
+                var roleStore = new RoleStore<IdentityRole>(this);
+
+
+                if (!Roles.Any(r => r.Name == role))
                 {
+                    IdentityRole newRole = new IdentityRole(role);
+                    newRole.NormalizedName = role.Normalize().ToUpperInvariant(); 
+                    await roleStore.CreateAsync(newRole);
+                }
+            }
+
+            //Add user to each role
+
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+            await userManager.AddToRoleAsync(OrganizerUser, "Organizer");
+            await userManager.AddToRoleAsync(User, "User");
+
+
+
+
+            //Add events
+
+            Events[] Events = new Events[] {
+                new Events(){
                     Title = "Kungälv discgolf day",
-               //     Organizer = OrganizersList[1],
                     Description = "We play discgolf for fun, everyone is welcome!",
                     Place = "Kungälv",
                     Address = "Stigvägen, 34",
                     Date = DateTime.Parse("4/04/2021 16:00"),
                     SpotsAvailable = 40,
-
                 },
-                new Events
-                {
+                new Events(){
+                    Title="Moonhaven",
+                    Description="Best lazertag in the world",
+                    Place="Blackpark",
+                    Address="510 N McPherson Church Rd Fayetteville, NC 28303",
+                    Date=DateTime.Now.AddDays(12),
+                    SpotsAvailable=23,
+                },
+                 new Events(){
                     Title = "Jokkmokk Frisbee tour",
-                   // Organizer = OrganizersList[2],
                     Description = "Join our tournament and win prices from our sponsor Kastaplast",
                     Place = "Jokkmokk",
                     Address = "Älgstigen, 109",
                     Date = DateTime.Parse("5/06/2021 11:00:00"),
                     SpotsAvailable = 40,
-
-                }
+                },
             };
-            //  Organizers.AddRange(OrganizersList);
-            Event.AddRange(EventsList);
-            MyUser.AddRange(Users);
+                
+            await AddRangeAsync(Events);
 
-            SaveChanges();
-
+            await SaveChangesAsync();
         }
     }
-    }
+}

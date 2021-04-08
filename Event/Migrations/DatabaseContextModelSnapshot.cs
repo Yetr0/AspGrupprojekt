@@ -51,7 +51,7 @@ namespace Event.Migrations
 
                     b.HasIndex("MyUserId");
 
-                    b.ToTable("Event");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Event.Models.MyUser", b =>

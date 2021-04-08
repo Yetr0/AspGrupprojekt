@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Event.Migrations
 {
-    public partial class firstMig : Migration
+    public partial class newMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -153,7 +153,7 @@ namespace Event.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Event",
+                name: "Events",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -168,9 +168,9 @@ namespace Event.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Event", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Event_AspNetUsers_MyUserId",
+                        name: "FK_Events_AspNetUsers_MyUserId",
                         column: x => x.MyUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -217,8 +217,8 @@ namespace Event.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Event_MyUserId",
-                table: "Event",
+                name: "IX_Events_MyUserId",
+                table: "Events",
                 column: "MyUserId");
         }
 
@@ -240,7 +240,7 @@ namespace Event.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Event");
+                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

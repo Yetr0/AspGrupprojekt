@@ -17,6 +17,7 @@ namespace Event.Models
         public string Address { get; set; }
         public DateTime Date { get; set; }
         public int SpotsAvailable { get; set; }
-        
+     
+
     }
 }

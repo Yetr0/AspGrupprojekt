@@ -32,10 +32,10 @@ namespace Event
             services.AddDbContext<DatabaseContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseContext")));
      
-
-
             services.AddDefaultIdentity<MyUser>()
-         .AddEntityFrameworkStores<DatabaseContext>();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<DatabaseContext>();
+   
         }
 
 

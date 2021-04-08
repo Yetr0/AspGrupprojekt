@@ -10,6 +10,7 @@
     <h1 class="display-4">Welcome</h1>
     <img class="card-img mb-4" src="~/images/discgolfbasket.jpg" />
     <h3>Join us today and compete in tournaments or play for fun with your local disc golf club</h3>
+
     <div class="btn-group">
 
         @if (User.Identity.IsAuthenticated)
@@ -21,5 +22,6 @@
             <a asp-page="/User/Register" type="button" class="btn btn-outline-primary">Register</a>
             <a asp-page="/User/Login" type="button" class="btn btn-outline-primary">Log In</a>
         }
+
     </div>
 </div>

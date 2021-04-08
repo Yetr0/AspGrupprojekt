@@ -60,7 +60,7 @@ namespace Event.Pages
                    .Include(u => u.MyEvents)
                    .FirstOrDefaultAsync();
 
-                Events RemoveEvent = await _context.Event.Where(e => e.Id == id).FirstOrDefaultAsync();
+                Events RemoveEvent = await _context.Events.Where(e => e.Id == id).FirstOrDefaultAsync();
 
                 user.MyEvents.Remove(RemoveEvent);
 

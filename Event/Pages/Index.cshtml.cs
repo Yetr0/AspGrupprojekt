@@ -16,15 +16,25 @@ namespace Event.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly DatabaseContext _context;
         private readonly UserManager<MyUser> _userManager;
+        private readonly SignInManager<MyUser> _signInManager;
+
 
         public IndexModel(
-            ILogger<IndexModel> logger,
-            DatabaseContext context,
-            UserManager<MyUser> userManager)
+             ILogger<IndexModel> logger,
+             DatabaseContext context,
+             UserManager<MyUser> userManager,
+              SignInManager<MyUser> signInManager)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
+             _signInManager = signInManager;
+        }
+        public async Task OnGetAsync()
+        {
+           
+                await _context.ResetAndSeedAsync(_userManager);
+           
         }
     }
 

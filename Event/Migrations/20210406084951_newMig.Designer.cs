@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20210331210936_firstMig")]
-    partial class firstMig
+    [Migration("20210406084951_newMig")]
+    partial class newMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,7 +53,7 @@ namespace Event.Migrations
 
                     b.HasIndex("MyUserId");
 
-                    b.ToTable("Event");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Event.Models.MyUser", b =>

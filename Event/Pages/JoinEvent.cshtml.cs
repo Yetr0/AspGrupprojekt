@@ -34,7 +34,7 @@ namespace Event.Pages
                 return NotFound();
             }
 
-            Event = await _context.Event.FirstOrDefaultAsync(m => m.Id == id);
+            Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Event == null)
             {
@@ -49,7 +49,7 @@ namespace Event.Pages
                 return NotFound();
             }
 
-            Event = await _context.Event.FirstOrDefaultAsync(m => m.Id == id);
+            Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Event == null)
             {
