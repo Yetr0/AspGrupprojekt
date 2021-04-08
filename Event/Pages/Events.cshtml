@@ -13,7 +13,7 @@
         <h1 class="display-4 text-center">@Html.DisplayFor(modelItem => item.Title)</h1>
         <p class="lead text-center">@Html.DisplayFor(modelItem => item.Description)</p>
         <hr class="my-4">
-        <p class="font-weight-bold text-center">Date the event was created:  @Html.DisplayFor(modelItem => item.Date) </p>
+        <p class="font-weight-bold text-center">Date of event:  @Html.DisplayFor(modelItem => item.Date) </p>
         <p class="lead">
             <div class="d-flex justify-content-center">
                 <a asp-page="./JoinEvent" class=" btn btn-primary text-center" asp-route-id="@item.Id">See more and join event</a>

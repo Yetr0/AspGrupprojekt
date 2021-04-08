@@ -8,7 +8,7 @@
 
 
 
-@if (User.IsInRole("Admin"))
+@if (User.IsInRole("Admin") && User.IsInRole("Organizer") )
 {
     <div class="text-center">
         <h1 class="display-4">Hi Admin!</h1>
@@ -17,9 +17,7 @@
 
     </div>
 }
-
-
-@if (User.IsInRole("Organizer"))
+else if (User.IsInRole("Organizer"))
 {
     <div class="text-center">
         <h1 class="display-4">Hi Organizer!!</h1>
