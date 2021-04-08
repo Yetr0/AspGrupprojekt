@@ -1,0 +1,59 @@
+﻿@page
+@model Event.Pages.AddEventsModel
+
+@{
+    ViewData["Title"] = "AddEvents";
+}
+
+<h1>AddEvents</h1>
+
+<h4>Events</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Events.Title" class="control-label"></label>
+                <input asp-for="Events.Title" class="form-control" />
+                <span asp-validation-for="Events.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Events.Description" class="control-label"></label>
+                <input asp-for="Events.Description" class="form-control" />
+                <span asp-validation-for="Events.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Events.Place" class="control-label"></label>
+                <input asp-for="Events.Place" class="form-control" />
+                <span asp-validation-for="Events.Place" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Events.Address" class="control-label"></label>
+                <input asp-for="Events.Address" class="form-control" />
+                <span asp-validation-for="Events.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Events.Date" class="control-label"></label>
+                <input asp-for="Events.Date" class="form-control" />
+                <span asp-validation-for="Events.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Events.SpotsAvailable" class="control-label"></label>
+                <input asp-for="Events.SpotsAvailable" class="form-control" />
+                <span asp-validation-for="Events.SpotsAvailable" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -6,12 +6,35 @@
 
 
 
+
+
+@if (User.IsInRole("Admin"))
+{
+    <div class="text-center">
+        <h1 class="display-4">Hi Admin!</h1>
+        <a asp-page="AdminPage" type="button" class="btn btn-outline-primary">Handle roles</a>
+        <a asp-page="AddEvents" type="button" class="btn btn-outline-primary">Handle events</a>
+
+    </div>
+}
+
+
+@if (User.IsInRole("Organizer"))
+{
+    <div class="text-center">
+        <h1 class="display-4">Hi Organizer!!</h1>
+        <a asp-page="AddEvents" type="button" class="btn btn-outline-primary">Handle events</a>
+
+    </div>
+}
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <img class="card-img mb-4" src="~/images/discgolfbasket.jpg" />
     <h3>Join us today and compete in tournaments or play for fun with your local disc golf club</h3>
 
     <div class="btn-group">
+
 
         @if (User.Identity.IsAuthenticated)
         {

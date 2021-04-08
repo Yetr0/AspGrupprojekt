@@ -47,6 +47,7 @@ namespace Event.Context
             };
             await userManager.CreateAsync(OrganizerUser, "Passw0rd!");
 
+
             MyUser User = new MyUser()
             {
                 UserName = "User",
@@ -77,6 +78,7 @@ namespace Event.Context
             //Add user to each role
 
             await userManager.AddToRoleAsync(adminUser, "Admin");
+            await userManager.AddToRoleAsync(adminUser, "Organizer");
             await userManager.AddToRoleAsync(OrganizerUser, "Organizer");
             await userManager.AddToRoleAsync(User, "User");
 
