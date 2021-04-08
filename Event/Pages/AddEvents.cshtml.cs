@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,7 +19,7 @@ namespace Event.Pages
         private readonly SignInManager<MyUser> _signInManager;
 
 
-        public AddEventsModel(Event.Context.DatabaseContext context, UserManager<MyUser> userManager, SignInManager<MyUser> signInManager)
+        public AddEventsModel(DatabaseContext context, UserManager<MyUser> userManager, SignInManager<MyUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
