@@ -5,34 +5,54 @@
     ViewData["Title"] = "AdminPage";
 }
 
-<h1>AdminPage</h1>
-
-<h4>Events</h4>
+<h1 class="text-center">AdminPage</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="text-center">
+    <div>
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                @{ 
-
-                    int i = 0;
-
-                    foreach (var user in Model.UsersAndRoles)
-                    {
-                        foreach ( var role in user.Roles)
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Is Organizer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ 
+                        foreach (var user in Model.UsersAndRoles)
                         {
-                            <p>@role</p>
+                            <tr>
+                                <td>@user.User.UserName</td>
+                                <td>@user.User.Email</td>
+                                <td>@{
+                                    if (user.Organizer)
+                                    {
+                                        <input type="checkbox" checked="checked" name="Organizer" value="@user.User.UserName" />
+                                    }
+                                    else {
+                                        <input type="checkbox" name="Organizer" value="@user.User.UserName"/>
+                                    }
+                                }
+                                </td>
+                            </tr>
                         }
-                    <p>@user.User.UserName</p>
-
-                    i++;
-                    
+                    }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            <div style="display:none;">
+                @{ 
+                    foreach (var organizer in Model.UsersAndRoles)
+                    {
+                        if (organizer.Organizer)
+                        {
+                            <input asp-for="PrevOrganizer" value="@organizer.User.UserName"/>
+                        }
                     }
                 }
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

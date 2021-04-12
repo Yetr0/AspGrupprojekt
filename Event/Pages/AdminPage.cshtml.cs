@@ -18,6 +18,10 @@ namespace Event.Pages
     [Authorize(Roles = "Admin")]
     public class AdminPageModel : PageModel
     {
+        [BindProperty]
+        public List<string> PrevOrganizer { get; set; }
+        [FromForm(Name = "Organizer")]
+        public List<string> Organizer { get; set; }
         public List<AdminPage> UsersAndRoles { get; set; }
 
 
@@ -30,15 +34,15 @@ namespace Event.Pages
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> OnGet()
+        public IActionResult OnGet()
         {
             List<AdminPage> results = new List<AdminPage>();
             var Users = _userManager.Users.ToList();
+            List<MyUser> organizers = _userManager.GetUsersInRoleAsync("Organizer").Result.ToList();
             foreach (var user in Users)
             {
-                List<string> roles = _userManager.GetRolesAsync(user).Result.ToList();
-                AdminPage obj = new AdminPage();
-                results.Add(new AdminPage { User = user, Roles = roles});
+                bool organizer = organizers.Contains(user) ? true : false;
+                results.Add(new AdminPage { User = user, Organizer = organizer });
             }
             UsersAndRoles = results;
             
@@ -51,11 +55,29 @@ namespace Event.Pages
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            Console.WriteLine(Organizer + "\n" + PrevOrganizer);
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            foreach (var organizer in Organizer)
+            {
+                if (!PrevOrganizer.Contains(organizer))
+                {
+                    var user = await _context.Users.Where(u => u.UserName == organizer).FirstAsync();
+                    await _userManager.AddToRoleAsync(user, "Organizer");
+                }
+            }
+            foreach (var prevorg in PrevOrganizer)
+            {
+                if (!Organizer.Contains(prevorg))
+                {
+                    var user = _userManager.Users.Where(u => u.UserName == prevorg).First();
+                    await _userManager.RemoveFromRoleAsync(user, "Organizer");
+                }
+            }
+            
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

@@ -8,6 +8,6 @@ namespace Event.Models
     public class AdminPage
     {
         public MyUser User { get; set; }
-        public List<string> Roles { get; set; }
+        public bool Organizer { get; set; }
     }
 }
