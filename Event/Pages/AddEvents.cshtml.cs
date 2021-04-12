@@ -11,7 +11,7 @@ using Event.Context;
 namespace Event.Pages
 {
 
-    [Authorize(Roles = "Organizer")]
+    [Authorize(Roles = "Organizer, Admin")]
     public class AddEventsModel : PageModel
     {
         private readonly DatabaseContext _context;

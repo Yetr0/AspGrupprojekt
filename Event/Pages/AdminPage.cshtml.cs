@@ -77,7 +77,6 @@ namespace Event.Pages
                     await _userManager.RemoveFromRoleAsync(user, "Organizer");
                 }
             }
-            
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
