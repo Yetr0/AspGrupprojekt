@@ -11,17 +11,17 @@
 @if (User.IsInRole("Admin"))
 {
     <div class="text-center">
-        <h1 class="display-4">Hi Admin!</h1>
+        <h1 class="display-4">Hi Admin, these are your options:</h1>
         <a asp-page="AdminPage" type="button" class="btn btn-outline-primary">Handle roles</a>
-        <a asp-page="AddEvents" type="button" class="btn btn-outline-primary">Handle events</a>
+        <a asp-page="AddEvents" type="button" class="btn btn-outline-primary">Create events</a>
 
     </div>
 }
 else if (User.IsInRole("Organizer"))
 {
     <div class="text-center">
-        <h1 class="display-4">Hi Organizer!!</h1>
-        <a asp-page="AddEvents" type="button" class="btn btn-outline-primary">Handle events</a>
+        <h1 class="display-4">Hi Organizer, why not create an event?</h1>
+        <a asp-page="AddEvents" type="button" class="btn btn-outline-primary">Create events</a>
 
     </div>
 }

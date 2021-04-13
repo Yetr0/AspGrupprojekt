@@ -41,15 +41,15 @@ namespace Event.Context
             {
                 UserName = "admin_user",
                 EmailConfirmed = true,
-                Email = "test@hotmail.com",
+                Email = "admin@hotmail.com",
             };
             await userManager.CreateAsync(adminUser, "Passw0rd!");
 
             MyUser OrganizerUser = new MyUser()
             {
-                UserName = "OrganizerUser",
+                UserName = "Organizer_User",
                 EmailConfirmed = true,
-                Email = "test@hotmail.com",
+                Email = "organizer@hotmail.com",
             };
             await userManager.CreateAsync(OrganizerUser, "Passw0rd!");
 
@@ -58,7 +58,7 @@ namespace Event.Context
             {
                 UserName = "User",
                 EmailConfirmed = true,
-                Email = "test@hotmail.com",
+                Email = "user@hotmail.com",
             };
             await userManager.CreateAsync(User, "Passw0rd!");
 
