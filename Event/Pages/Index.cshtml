@@ -36,7 +36,7 @@ else if (User.IsInRole("Organizer"))
 
         @if (User.Identity.IsAuthenticated)
         {
-            <a  asp-area="identity" asp-page="/User/Logout" type="button" class="btn btn-outline-primary">Log Out</a>
+            <a asp-area="identity" asp-page="/Account/Logout" type="button" class="btn btn-outline-primary">Log Out</a>
         }
         else
         {
