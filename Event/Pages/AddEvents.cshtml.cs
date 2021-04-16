@@ -50,7 +50,7 @@ namespace Event.Pages
             await _context.Events.AddAsync(EventCreated);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./OrganizeEvents", new { AddedEvent = "true" });
         }
     }
 }

@@ -1,0 +1,98 @@
+﻿@page
+@model Event.Pages.OrganizeEventsModel
+
+@{
+    ViewData["Title"] = "OrganizeEvents";
+}
+
+<h1>OrganizeEvents</h1>
+
+@{
+
+    if (Model.AddedEvent != null)
+    {
+        <div class="m-auto w-25 text-center bg-success">
+            <p>Event has been added</p>
+        </div>
+    }
+    if (Model.Edited != null)
+    {
+        <div class="m-auto w-25 text-center bg-success">
+            <p>Successfully edited @Model.Edited</p>
+        </div>
+    }
+    if (Model.Deleted != null)
+    {
+        <div class="m-auto w-25 text-center bg-success">
+            <p>Successfully delted @Model.Deleted</p>
+        </div>
+    }
+
+    if (Model.Events.Count < 1)
+    {
+        <div class="m-auto text-center">
+            <h3>You haven't created any events</h3>
+            <a asp-page="AddEvents" class="btn btn-info">Create event</a>
+        </div>
+    }
+    else
+    {
+        <div class="m-3">
+            <a asp-page="AddEvents" class="btn btn-info">Create event</a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Events[0].Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Events[0].Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Events[0].Place)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Events[0].Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Events[0].Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Events[0].SpotsAvailable)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Events)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Place)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SpotsAvailable)
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
