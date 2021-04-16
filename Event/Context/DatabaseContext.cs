@@ -28,8 +28,6 @@ namespace Event.Context
             base.OnModelCreating(builder);
         }
 
-  
-
         public async Task ResetAndSeedAsync(UserManager<MyUser> userManager)
         {
             await Database.EnsureDeletedAsync();
@@ -88,9 +86,6 @@ namespace Event.Context
             await userManager.AddToRoleAsync(adminUser, "Organizer");
             await userManager.AddToRoleAsync(OrganizerUser, "Organizer");
             await userManager.AddToRoleAsync(User, "User");
-
-
-
 
             //Add events
 
