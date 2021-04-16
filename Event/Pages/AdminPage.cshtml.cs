@@ -18,6 +18,10 @@ namespace Event.Pages
     [Authorize(Roles = "Admin")]
     public class AdminPageModel : PageModel
     {
+        [BindProperty(SupportsGet = true)]
+        public List<string> Removed { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public List<string> Added { get; set; }
         [BindProperty]
         public List<string> PrevOrganizer { get; set; }
         [FromForm(Name = "Organizer")]
@@ -55,7 +59,10 @@ namespace Event.Pages
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            Console.WriteLine(Organizer + "\n" + PrevOrganizer);
+
+            List<string> removed = new List<string>();
+            List<string> added = new List<string>();
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -67,6 +74,7 @@ namespace Event.Pages
                 {
                     var user = await _context.Users.Where(u => u.UserName == organizer).FirstAsync();
                     await _userManager.AddToRoleAsync(user, "Organizer");
+                    added.Add(user.UserName);
                 }
             }
             foreach (var prevorg in PrevOrganizer)
@@ -75,11 +83,12 @@ namespace Event.Pages
                 {
                     var user = _userManager.Users.Where(u => u.UserName == prevorg).First();
                     await _userManager.RemoveFromRoleAsync(user, "Organizer");
+                    removed.Add(user.UserName);
                 }
             }
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./AdminPage", new { Removed = removed, Added = added});
         }
     }
 }

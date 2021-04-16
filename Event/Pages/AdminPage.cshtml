@@ -9,6 +9,32 @@
 <hr />
 <div class="text-center">
     <div>
+        @{
+            if (Model.Added.Count > 0)
+            {
+                <div class="ml-auto mr-auto w-50 bg-success row justify-content-around mt-3 mb-2">
+                    <p class="col-12">Successfully added</p>
+                    @{
+                        foreach (var user in Model.Added)
+                        {
+                            <p class="col-3">@user</p>
+                        }
+                    }
+                </div>
+            }
+            if (Model.Removed.Count > 0)
+            {
+                <div class="ml-auto mr-auto w-50 bg-success row justify-content-around mt-1 mb-3">
+                    <p class="col-12">Successfully Removed</p>
+                    @{
+                        foreach (var user in Model.Removed)
+                        {
+                            <p class="col-3">@user</p>
+                        }
+                    }
+                </div>
+            }
+        }
         <form method="post">
             <table class="table table-striped">
                 <thead class="thead-dark">
@@ -19,24 +45,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{ 
+                    @{
                         foreach (var user in Model.UsersAndRoles)
                         {
                             <tr>
                                 <td>@user.User.UserName</td>
                                 <td>@user.User.Email</td>
-                                <td>@{
-                                    if (user.Organizer)
-                                    {
-                                        <input type="checkbox" checked="checked" name="Organizer" value="@user.User.UserName" />
-                                    }
-                                    else {
-                                        <input type="checkbox" name="Organizer" value="@user.User.UserName"/>
-                                    }
+                                <td>
+                                    @{
+                                        if (user.Organizer)
+                                        {
+                                            <input type="checkbox" checked="checked" name="Organizer" value="@user.User.UserName" />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" name="Organizer" value="@user.User.UserName" />
+                                        }
                                 }
-                                </td>
-                            </tr>
-                        }
+                            </td>
+                        </tr>
+                    }
                     }
                 </tbody>
             </table>
@@ -44,12 +72,12 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
             <div style="display:none;">
-                @{ 
+                @{
                     foreach (var organizer in Model.UsersAndRoles)
                     {
                         if (organizer.Organizer)
                         {
-                            <input asp-for="PrevOrganizer" value="@organizer.User.UserName"/>
+                            <input asp-for="PrevOrganizer" value="@organizer.User.UserName" />
                         }
                     }
                 }
