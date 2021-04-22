@@ -31,7 +31,7 @@
                             </li>
 
                         }
-                        @if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
+                        @if (User.IsInRole("Organizer"))
                         {
                             <li class="nav-item">
                                 <a class="btn btn-success" asp-area="" asp-page="/OrganizeEvents">Organize Events</a>
