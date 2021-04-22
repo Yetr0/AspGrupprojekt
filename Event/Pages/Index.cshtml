@@ -6,8 +6,6 @@
 
 
 
-
-
 @if (User.IsInRole("Admin"))
 {
     <div class="text-center">
@@ -28,17 +26,22 @@ else if (User.IsInRole("Organizer"))
 
     <div class="btn-group">
 
+            @if (User.IsInRole("User"))
+            {
+                <a asp-area="" asp-page="/Events" type="button" class="btn btn-outline-primary">Find Events!</a>
+            }
+
 
         @if (User.Identity.IsAuthenticated)
         {
-            <a asp-area="identity" asp-page="/Account/Logout" type="button" class="btn btn-outline-primary">Log Out</a>
+            <a asp-area="identity" asp-page="/Account/Logout" type="button" class="btn btn-outline-secondary">Log Out</a>
         }
         else
         {
             <a asp-area="identity" asp-page="Account/Register" type="button" class="btn btn-outline-primary">Register</a>
             <a asp-area="identity" asp-page="Account/Login" type="button" class="btn btn-outline-primary">Log In</a>
-      
-          
+
+
         }
 
 
