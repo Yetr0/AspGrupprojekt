@@ -24,17 +24,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Events">Events</a>
                         </li>
-                        @if (User.IsInRole("Admin") || User.IsInRole("Organizer") || User.IsInRole("User")) { 
+                        @if (User.IsInRole("Admin") || User.IsInRole("Organizer") || User.IsInRole("User"))
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/MyEvents">My Events</a>
                             </li>
 
                         }
-                        @if (User.IsInRole("Organizer"))
+                        @if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/OrganizeEvents">Organize Events</a>
+                                <a class="btn btn-success" asp-area="" asp-page="/OrganizeEvents">Organize Events</a>
                             </li>
+                            <li class="nav-item">
+                                <a asp-page="AddEvents" type="button" class="btn btn-success">Create events</a>
+                            </li>
+
                         }
 
 
