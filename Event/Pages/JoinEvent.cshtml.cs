@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Event.Pages
 {
+    [Authorize]
     public class JoinEventModel : PageModel
     {
 

@@ -22,25 +22,26 @@
 
 <hr />
 
-@if (Request.Method == "POST")
-{
-    <div class="d-flex flex-column py-2">
-        <h2 class="text-center">You just joined   @Model.Event.Title!!</h2>
-        <div class="d-flex justify-content-center">
+
+@if (User.IsInRole("Admin") || User.IsInRole("Organizer") || User.IsInRole("User"))
+    @if (Request.Method == "POST")
+    {
+        <div class="d-flex flex-column py-2">
+            <h2 class="text-center">You just joined   @Model.Event.Title!!</h2>
             <div class="d-flex justify-content-center">
-                <a asp-page="/Events" type="button" class="btn btn-outline-primary">View More Events</a>
-                <a asp-page="/MyEvents" type="button" class="btn btn-outline-primary">View Your Events</a>
-            </div>
+                <div class="d-flex justify-content-center">
+                    <a asp-page="/Events" type="button" class="btn btn-outline-primary">View More Events</a>
+                    <a asp-page="/MyEvents" type="button" class="btn btn-outline-primary">View Your Events</a>
+                </div>
             </div>
         </div>
-}
-else
-{
-<form asp-route-id="@Model.Event.Id">
-    <div class="d-flex justify-content-center">
-        <input type="submit" class="btn btn-outline-primary" value="Join This Event" />
-    </div>
-</form>
-}
-
+    }
+    else
+    {
+        <form asp-route-id="@Model.Event.Id">
+            <div class="d-flex justify-content-center">
+                <input type="submit" class="btn btn-outline-primary" value="Join This Event" />
+            </div>
+        </form>
+    }
 
