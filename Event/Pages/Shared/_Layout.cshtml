@@ -31,9 +31,10 @@
                             </li>
 
                         }
+                        
                         @if (User.IsInRole("Organizer"))
                         {
-                            <li class="nav-item">
+                            <li class="nav-item ml-1 mr-1">
                                 <a class="btn btn-success" asp-area="" asp-page="/OrganizeEvents">Organize Events</a>
                             </li>
                             <li class="nav-item">
@@ -44,7 +45,7 @@
 
                         @if (User.IsInRole("Admin"))
                         {
-                            <li class="nav-item">
+                            <li class="nav-item ml-1">
                                 <a asp-page="AdminPage" type="button" class="btn btn-danger">Handle roles</a>
                             </li>
                         }
