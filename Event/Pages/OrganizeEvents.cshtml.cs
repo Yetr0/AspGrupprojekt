@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Event.Context;
 using Event.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Event.Pages
 {
@@ -15,6 +16,8 @@ namespace Event.Pages
     public class OrganizeEventsModel : PageModel
     {
         private readonly Event.Context.DatabaseContext _context;
+
+        private readonly UserManager<MyUser> _userManager;
         [BindProperty(SupportsGet = true)]
         public string AddedEvent { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -22,17 +25,22 @@ namespace Event.Pages
         [BindProperty(SupportsGet = true)]
         public string Deleted { get; set; }
 
-        public OrganizeEventsModel(Event.Context.DatabaseContext context)
+        public OrganizeEventsModel(
+            DatabaseContext context,
+            UserManager<MyUser> userManager
+            )
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IList<Events> Events { get;set; }
 
         public IActionResult OnGet()
         {
-            
-            Events = _context.Events.Where(e => e.Organizer.UserName == User.Identity.Name).ToList();
+            var userId = _userManager.GetUserId(User);
+
+            Events = _context.Events.Where(e => e.Organizer.Id == userId).ToList();
             return Page();
         }
     }

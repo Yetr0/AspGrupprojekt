@@ -10,5 +10,7 @@ namespace Event.Models
     public class MyUser : IdentityUser
     {
         public IList<Events> MyEvents { get; set; }
+
+        public IList<Events> HostedEvents { get; set; }
     }
 }

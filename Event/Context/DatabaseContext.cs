@@ -26,6 +26,12 @@ namespace Event.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<Events>()
+                .HasOne(e => e.Organizer)
+                .WithMany(e => e.HostedEvents);
+            builder.Entity<Events>()
+                .HasMany(e => e.Attendees)
+                .WithMany(e => e.MyEvents);
         }
 
         public async Task ResetAndSeedAsync(UserManager<MyUser> userManager)

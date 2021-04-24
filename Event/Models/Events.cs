@@ -18,6 +18,7 @@ namespace Event.Models
         public DateTime Date { get; set; }
         public int SpotsAvailable { get; set; }
         public MyUser Organizer { get; set; }
+        public List<MyUser> Attendees { get; set; }
 
     }
 }
