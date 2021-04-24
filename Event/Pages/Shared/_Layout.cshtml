@@ -24,12 +24,30 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Events">Events</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/MyEvents">My Events</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/OrganizeEvents">Organize Events</a>
-                        </li>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Organizer") || User.IsInRole("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/MyEvents">My Events</a>
+                            </li>
+
+                        }
+                        @if (User.IsInRole("Organizer"))
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-success" asp-area="" asp-page="/OrganizeEvents">Organize Events</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-page="AddEvents" type="button" class="btn btn-success">Create events</a>
+                            </li>
+
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a asp-page="AdminPage" type="button" class="btn btn-danger">Handle roles</a>
+                            </li>
+                        }
                         <li class="nav-item ml-auto">
                             <partial name="_LoginPartial" />
                         </li>
@@ -45,10 +63,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted"  style="display: none;">
         <div class="container">
             &copy; 2021 - Play Disc Golf
         </div>
+
         <a asp-route-seedDb="true">Reset Db</a>
     </footer>
 

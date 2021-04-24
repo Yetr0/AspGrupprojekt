@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Event.Context;
 using Event.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Event.Pages
 {
+    [Authorize]
     public class JoinEventModel : PageModel
     {
 

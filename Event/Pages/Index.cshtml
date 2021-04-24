@@ -6,23 +6,16 @@
 
 
 
-
-
 @if (User.IsInRole("Admin"))
 {
     <div class="text-center">
-        <h1 class="display-4">Hi Admin, these are your options:</h1>
-        <a asp-page="AdminPage" type="button" class="btn btn-outline-primary">Handle roles</a>
-        <a asp-page="AddEvents" type="button" class="btn btn-outline-primary">Create events</a>
-
+        <h1 class="display-4">Hi Admin</h1>
     </div>
 }
 else if (User.IsInRole("Organizer"))
 {
     <div class="text-center">
-        <h1 class="display-4">Hi Organizer, why not create an event?</h1>
-        <a asp-page="AddEvents" type="button" class="btn btn-outline-primary">Create events</a>
-
+        <h1 class="display-4">Hi Organizer?</h1>
     </div>
 }
 
@@ -33,17 +26,22 @@ else if (User.IsInRole("Organizer"))
 
     <div class="btn-group">
 
+            @if (User.IsInRole("User"))
+            {
+                <a asp-area="" asp-page="/Events" type="button" class="btn btn-outline-primary">Find Events!</a>
+            }
+
 
         @if (User.Identity.IsAuthenticated)
         {
-            <a asp-area="identity" asp-page="/Account/Logout" type="button" class="btn btn-outline-primary">Log Out</a>
+            <a asp-area="identity" asp-page="/Account/Logout" type="button" class="btn btn-outline-secondary">Log Out</a>
         }
         else
         {
             <a asp-area="identity" asp-page="Account/Register" type="button" class="btn btn-outline-primary">Register</a>
             <a asp-area="identity" asp-page="Account/Login" type="button" class="btn btn-outline-primary">Log In</a>
-      
-          
+
+
         }
 
 

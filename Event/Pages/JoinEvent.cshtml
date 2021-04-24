@@ -22,54 +22,24 @@
 
 <hr />
 
-@{
-    if (Request.Method == "POST")
-    {
-        if (Model.Joined)
-        {
-            <div class="d-flex flex-column py-2">
-                <h2 class="text-center">You just joined   @Model.Event.Title!!</h2>
-                <div class="d-flex justify-content-center">
-                    <div class="d-flex justify-content-center">
-                        <a asp-page="/Events" type="button" class="btn btn-outline-primary">View More Events</a>
-                        <a asp-page="/MyEvents" type="button" class="btn btn-outline-primary">View Your Events</a>
-                    </div>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="d-flex flex-column py-2">
-                <h2 class="text-center">You just left @Model.Event.Title</h2>
-                <div class="d-flex justify-content-center">
-                    <div class="d-flex justify-content-center">
-                        <a asp-page="/Events" type="button" class="btn btn-outline-primary">View Other Events</a>
-                        <a asp-page="/MyEvents" type="button" class="btn btn-outline-primary">View Your Events</a>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        if (!Model.Joined)
-        {
-            <form asp-route-id="@Model.Event.Id">
-                <div class="d-flex justify-content-center">
-                    <input type="submit" class="btn btn-outline-primary" value="Join This Event" />
-                </div>
-            </form>
-        }
-        else
-        {
-        <form asp-route-id="@Model.Event.Id">
+@if (Request.Method == "POST")
+{
+    <div class="d-flex flex-column py-2">
+        <h2 class="text-center">You just joined   @Model.Event.Title!!</h2>
+        <div class="d-flex justify-content-center">
             <div class="d-flex justify-content-center">
-                <input asp-page-handler="Delete" asp-route-id="@Model.Event.Id" type="submit" class="btn btn-outline-primary" value="Leave Event" />
+                <a asp-page="/Events" type="button" class="btn btn-outline-primary">View More Events</a>
+                <a asp-page="/MyEvents" type="button" class="btn btn-outline-primary">View Your Events</a>
             </div>
-        </form>
-        }
-    }
+            </div>
+        </div>
 }
-
-
+else
+{
+<form asp-route-id="@Model.Event.Id">
+    <div class="d-flex justify-content-center">
+        <input type="submit" class="btn btn-outline-primary" value="Join This Event" />
+    </div>
+</form>
+}
 
