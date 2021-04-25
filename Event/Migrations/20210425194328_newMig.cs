@@ -164,17 +164,41 @@ namespace Event.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SpotsAvailable = table.Column<int>(type: "int", nullable: false),
-                    MyUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    OrganizerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Events", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Events_AspNetUsers_MyUserId",
-                        column: x => x.MyUserId,
+                        name: "FK_Events_AspNetUsers_OrganizerId",
+                        column: x => x.OrganizerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventsMyUser",
+                columns: table => new
+                {
+                    AttendeesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MyEventsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventsMyUser", x => new { x.AttendeesId, x.MyEventsId });
+                    table.ForeignKey(
+                        name: "FK_EventsMyUser_AspNetUsers_AttendeesId",
+                        column: x => x.AttendeesId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EventsMyUser_Events_MyEventsId",
+                        column: x => x.MyEventsId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -217,9 +241,14 @@ namespace Event.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Events_MyUserId",
+                name: "IX_Events_OrganizerId",
                 table: "Events",
-                column: "MyUserId");
+                column: "OrganizerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventsMyUser_MyEventsId",
+                table: "EventsMyUser",
+                column: "MyEventsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -240,10 +269,13 @@ namespace Event.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Events");
+                name: "EventsMyUser");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

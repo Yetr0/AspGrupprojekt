@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20210406084951_newMig")]
+    [Migration("20210425194328_newMig")]
     partial class newMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +37,7 @@ namespace Event.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MyUserId")
+                    b.Property<string>("OrganizerId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Place")
@@ -51,7 +51,7 @@ namespace Event.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MyUserId");
+                    b.HasIndex("OrganizerId");
 
                     b.ToTable("Events");
                 });
@@ -119,6 +119,21 @@ namespace Event.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("EventsMyUser", b =>
+                {
+                    b.Property<string>("AttendeesId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("MyEventsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AttendeesId", "MyEventsId");
+
+                    b.HasIndex("MyEventsId");
+
+                    b.ToTable("EventsMyUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -258,9 +273,26 @@ namespace Event.Migrations
 
             modelBuilder.Entity("Event.Models.Events", b =>
                 {
+                    b.HasOne("Event.Models.MyUser", "Organizer")
+                        .WithMany("HostedEvents")
+                        .HasForeignKey("OrganizerId");
+
+                    b.Navigation("Organizer");
+                });
+
+            modelBuilder.Entity("EventsMyUser", b =>
+                {
                     b.HasOne("Event.Models.MyUser", null)
-                        .WithMany("MyEvents")
-                        .HasForeignKey("MyUserId");
+                        .WithMany()
+                        .HasForeignKey("AttendeesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Event.Models.Events", null)
+                        .WithMany()
+                        .HasForeignKey("MyEventsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -316,7 +348,7 @@ namespace Event.Migrations
 
             modelBuilder.Entity("Event.Models.MyUser", b =>
                 {
-                    b.Navigation("MyEvents");
+                    b.Navigation("HostedEvents");
                 });
 #pragma warning restore 612, 618
         }
